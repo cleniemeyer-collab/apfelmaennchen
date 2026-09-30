@@ -1,5 +1,17 @@
 # Apfelmännchen mit GNU MP
 
+## Experiment mit einer lokalen KI
+
+Neben der lauffähigen Anwendung enthält dieses Repository ein eigenes
+[KI-Experiment mit zwölf Teilaufgaben](ki-experiment/README.md): originale
+Arbeitsaufträge, Startprompt, Schnittstellenverträge, überlieferter Status
+und der vorhandene erste Implementierungsversuch. Es untersucht den
+schrittweisen Nachbau durch eine lokale KI mit kleinem Kontextfenster.
+Die Hauptanwendung ist ein separater Vergleichsstand, kein Nachweis eines
+vollständig eigenständigen Nachbaus durch die lokale KI.
+
+## Anwendung starten
+
 CPU-Variante: `docker compose up -d --build`.
 Intel-GPU-Variante (auf diesem Server aktiv):
 `docker compose -f compose.yaml -f compose.gpu.yaml up -d --build`.
@@ -310,5 +322,26 @@ im Anwendungscontainer. Ein visueller Browsertest wird dadurch nicht ersetzt.
 - https://gmplib.org/#DOWNLOAD – GNU MP (Upstream-Version 6.3.0 zum Erstellungszeitpunkt)
 - https://www.mathematische-basteleien.de/apfelmaennchen.htm – mathematische Beschreibung
 
-GMP unterliegt LGPLv3 oder GPLv2; bei Weitergabe gelten die entsprechenden
-Lizenz- und Quellcodepflichten. GMP bleibt dynamisch verlinkt und austauschbar.
+## Lizenz
+
+Eigener Projektcode und eigene Dokumentation einschließlich `ki-experiment/`
+stehen, soweit nicht anders gekennzeichnet, unter der **GNU General Public
+License, Version 3 oder (nach eigener Wahl) jeder späteren Version**.
+SPDX-Kennung: `GPL-3.0-or-later`. Der vollständige Lizenztext steht in
+[LICENSE](LICENSE). Es besteht keine Gewährleistung; Einzelheiten regelt die Lizenz.
+
+Fremdbibliotheken, Treiber und verlinkte externe Inhalte behalten ihre eigenen
+Lizenzen. Insbesondere:
+
+- **GMP:** LGPLv3 oder GPLv2, jeweils auch spätere Versionen; damit ist die
+  Verwendung mit GPLv3-Projektcode kompatibel. GMP bleibt dynamisch verlinkt.
+  Siehe [GMP-Lizenzbedingungen](https://gmplib.org/manual/Copying).
+- **OpenCL-Loader ocl-icd:** BSD-2-Clause. Die OpenCL-Treiber werden getrennt
+  über Betriebssystempakete installiert und behalten ihre jeweiligen Lizenzen.
+- **OpenMP-Laufzeit libgomp:** GPLv3 mit GCC Runtime Library Exception;
+  siehe [GCC-Laufzeitbibliotheksausnahme](https://www.gnu.org/licenses/gcc-exception-3.1.html).
+
+Dieses Repository stellt Quellcode und Build-Anweisungen bereit, keine fertigen
+Container-Images oder Kopien der Fremdbibliotheken. Wer selbst Binärdateien oder
+Container weitergibt, muss zusätzlich die Lizenz-, Hinweis- und gegebenenfalls
+Quellcodepflichten der darin enthaltenen Komponenten beachten.

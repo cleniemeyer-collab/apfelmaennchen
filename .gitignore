@@ -1,6 +1,7 @@
 __pycache__/
 *.py[cod]
 /render
+/ki-experiment/nachbau/teilprojekte/01_RECHENKERN/tests/test_step_a
 *.o
 .env
 .env.*
