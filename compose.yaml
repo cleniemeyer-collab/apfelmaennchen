@@ -1,0 +1,14 @@
+services:
+  apfelmaennchen:
+    build: .
+    ports: ["8080:8080"]
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 4.0
+    environment:
+      OMP_NUM_THREADS: "4"
+      MAX_RENDER_JOBS: "4"

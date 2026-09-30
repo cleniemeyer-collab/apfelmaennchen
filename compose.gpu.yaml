@@ -1,0 +1,17 @@
+services:
+  apfelmaennchen:
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    group_add:
+      - "104"
+    environment:
+      RENDER_BACKEND: auto
+      # Required for Arc detection on this i5-3470 host with the Intel NEO driver.
+      NEOReadDebugKeys: "1"
+      OverrideGpuAddressSpace: "48"
+    mem_limit: 768m
+    tmpfs:
+      - /tmp:size=128m,mode=1777

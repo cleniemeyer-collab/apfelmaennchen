@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="de">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apfelmännchen · GMP</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/app.js" defer></script>
+<main>
+<header><span>GMP / MANDELBROT</span><h1>Eine Welt zwischen den Zahlen.</h1>
+<p>Ziehe mit der Maus einen Ausschnitt auf. Der Server berechnet ihn neu – mit GPU-Beschleunigung oder hochpräziser GMP-Arithmetik.</p></header>
+<nav aria-label="Bildsteuerung">
+<button id="back" disabled>← Zurück</button><button id="reset">Startbild</button>
+<label>Iterationen <select id="iterations"><option>100</option><option selected>250</option><option>500</option><option>1000</option><option>2000</option><option>5000</option><option>10000</option></select></label>
+<label>Manuell <input id="iterations-manual" type="number" min="50" max="100000" step="1" value="250" inputmode="numeric" title="Ganze Zahl von 50 bis 100000; Enter berechnet neu"></label>
+<label>Rechenweg <select id="backend"><option value="long-double" selected>FPU → GMP automatisch</option><option value="auto">GPU → GMP automatisch</option><option value="gmp">Immer GMP (präzise)</option><option value="perturb">GMP-Referenzbahn + GPU</option></select></label>
+<button id="refresh">Neu berechnen</button><button id="cancel" disabled>Berechnung abbrechen</button><a id="download" download="apfelmaennchen.png" hidden>PNG speichern ↓</a>
+<button id="config-save" disabled>Config speichern ↓</button>
+<button id="config-load">Config laden ↑</button>
+<input id="config-file" type="file" accept=".json,application/json" aria-label="Konfigurationsdatei auswählen" hidden>
+</nav>
+<div class="palette-controls" role="group" aria-label="Farbrotation">
+<label for="palette">Palettenversatz</label>
+<input id="palette" type="range" min="0" max="767" step="1" value="0">
+<output id="palette-value" for="palette">0 / 768</output>
+<label>Richtung <select id="palette-direction"><option value="1">Blau → Rot → Grün</option><option value="-1">Blau → Grün → Rot</option></select></label>
+<button id="palette-play" aria-pressed="false">Rotation starten</button>
+<button id="palette-reset">Originalfarben</button>
+</div>
+<div id="viewport"><canvas id="image" aria-label="Serverseitig berechnete Mandelbrot-Menge" width="640" height="480"></canvas><canvas id="overlay" width="640" height="480" aria-label="Mit gedrückter Maustaste einen Ausschnitt auswählen"></canvas></div>
+<p id="status" role="status" aria-live="polite">Startbild wird berechnet …</p>
+<footer>z₀ = 0 · zₙ₊₁ = zₙ² + c · Abbruch bei |z| &gt; 2<br>Schwarz: innerhalb des Iterationslimits nicht entkommen – kein Beweis der Zugehörigkeit.<br>Nach <a href="https://www.mathematische-basteleien.de/apfelmaennchen.htm">Mathematische Basteleien</a> · <a href="https://gmplib.org/">GNU MP</a></footer>
+</main>
+</html>

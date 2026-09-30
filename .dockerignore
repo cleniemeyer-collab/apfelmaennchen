@@ -1,0 +1,12 @@
+*
+!render.c
+!server.py
+!index.html
+!app.js
+!style.css
+!gpu.c
+!gpu.h
+!mandelbrot.cl
+!render_gmp.h
+!perturb.c
+!perturb.cl

@@ -1,0 +1,15 @@
+FROM debian:bookworm-slim AS build
+RUN apt-get update && apt-get install -y --no-install-recommends gcc libc6-dev libgmp-dev ocl-icd-opencl-dev && rm -rf /var/lib/apt/lists/*
+WORKDIR /src
+COPY render.c gpu.c gpu.h perturb.c render_gmp.h ./
+RUN gcc -O3 -Wall -Wextra -Werror -ffp-contract=off -fopenmp -DUSE_OPENCL render.c gpu.c perturb.c -lgmp -lOpenCL -lm -o render && strip render
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends python3 libgmp10 libgomp1 ocl-icd-libopencl1 intel-opencl-icd clinfo && rm -rf /var/lib/apt/lists/* && useradd -u 10001 app
+WORKDIR /app
+COPY --from=build /src/render ./render
+COPY server.py index.html app.js style.css mandelbrot.cl perturb.cl ./
+USER app
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 OMP_NUM_THREADS=4 OMP_DYNAMIC=FALSE RENDER_BACKEND=auto XDG_CACHE_HOME=/tmp/cache
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=3s CMD python3 -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=2)"
+CMD ["python3", "server.py"]
